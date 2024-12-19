@@ -1,0 +1,186 @@
+Login_ReqLogin :
+{
+    psh::ID : id,
+    psh::Password : pass
+}
+
+Login_ResLogin :
+{
+    psh::AccountNo : accountNo,
+    psh::ID : id,
+    eLoginResult : result,
+    psh::SessionKey : key
+}
+
+Login_ReqRegister :
+{
+    psh::ID : id,
+    psh::Password :  pass,
+    psh::Nickname :  nickname
+}
+
+Login_ResRegister :
+{
+    psh::AccountNo : accountNo,
+    psh::ID :  id,
+    eRegisterResult :  result
+}
+
+Game_ReqLogin :
+{
+    psh::AccountNo : accountNo,
+    psh::SessionKey : key
+}
+
+Game_ResLogin :
+{
+    psh::AccountNo : accountNo,
+    bool : success
+}
+
+Game_ReqLevelEnter :
+{
+    psh::AccountNo : accountNo,
+    psh::ServerType : type
+}
+
+Game_ResLevelEnter :
+{
+    psh::AccountNo : accountNo,
+    psh::ObjectID : myObject,
+    ServerType : type
+}
+
+
+Game_ReqChangeComplete :
+{
+    psh::AccountNo : accountNo
+}
+
+
+Game_ResCreateActor :
+{
+    psh::ObjectID : objectId,
+    psh::eObjectType : group,
+    char : characterIndex,
+    psh::FVector : location,
+    psh::FVector : direction,
+    bool : isSpawn
+
+}
+
+Game_ResChracterDetail :
+{
+    psh::ObjectID : objectId,
+    int : hp
+}
+
+Game_ResPlayerDetail : 
+{
+    psh::ObjectID : objectId,
+    psh::Nickname : nick
+}
+
+Game_ResDestroyActor :
+{
+    psh::ObjectID : objectId,
+    bool : isDead,
+char : cause
+}
+
+Game_ResGetCoin :
+{
+    psh::ObjectID : objectId,
+    uint8 : value
+}
+
+Game_ReqMove : 
+{
+    psh::FVector : location
+}
+
+Game_ResMove : 
+{
+    psh::ObjectID : objectId,
+    psh::eObjectType : group,
+    psh::FVector : location
+}
+
+Game_ResMoveStop :
+{
+    psh::ObjectID : objectId,
+    psh::FVector : location
+}
+Game_ReqAttack :
+{
+    char : type,
+    psh::FVector : dir
+}
+Game_ResAttack :
+{
+    psh::ObjectID : objectId,
+    char : type,
+    psh::FVector : dir
+}
+
+Game_ResDraw :
+{
+	psh::FVector : loc
+}
+
+Game_ResHit :
+{
+    psh::ObjectID : victimId,
+    psh::ObjectID : attackerId,
+    int : hp
+}
+
+Game_ResSpawnItem : 
+{
+    psh::ItemID : id,
+    psh::eObjectType : group,
+    char : characterIndex,
+    psh::FVector : location
+}
+
+Game_ResDestroyItem : 
+{
+    psh::ItemID : id
+}
+
+Debug_Game_AttackWhenDead :
+{
+	psh::ObjectID : id
+}
+
+Game_ReqChat : 
+{
+    String : chat
+}
+
+Game_ResChat : 
+{
+    psh::ObjectID : id,
+    String : chat
+}
+
+Version_ReqVersion :
+{
+    int : version
+}
+
+Version_ResVersion :
+{
+    int : version
+}
+
+Version_ReqGameData :
+{
+}
+
+Version_ResGameData :
+{
+    int : version,
+    String : csv
+}
+
