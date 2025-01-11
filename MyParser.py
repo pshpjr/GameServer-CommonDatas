@@ -245,9 +245,9 @@ def process_file(file_path):
         generate_unrealClientCPP(function_dictionary,outFile)
     
 
-src = r"C:\Users\pshpj\OneDrive\university\portfolio\packetParser"
+src = r"."
 dst = r"C:\Users\pshpj\OneDrive\university\portfolio\ChatTest\Source\ChatTest"
 process_file("PacketDefine.txt")
 shutil.move(src + r"\UnrealClient.h",dst+ r"\UnrealClient.h")
 shutil.move(src + r"\UnrealClient.cpp",dst+ r"\UnrealClient.cpp")
-shutil.move(src + r"\ContentJob.h",r"C:\Users\pshpj\OneDrive\university\portfolio\ChatTest\Source\MyLib\Public\ContentJob.h")
+shutil.move(src + r"\ContentJob.h",dst +r"\ContentJob.h")

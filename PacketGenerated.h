@@ -33,6 +33,11 @@ eGame_ResDestroyItem,
 eDebug_Game_AttackWhenDead,
 eGame_ReqChat,
 eGame_ResChat,
+eVersion_ReqVersion,
+eVersion_ResVersion,
+eVersion_ReqGameData,
+eVersion_ResGameData,
+eDebug_Delay,
 None,
 };
 
@@ -146,7 +151,7 @@ static void GetGame_ResChracterDetail(CRecvBuffer& buffer, psh::ObjectID& object
 	buffer >> objectId >> hp;
 }
 
-static void MakeGame_ResPlayerDetail(SendBuffer& buffer, const psh::ObjectID objectId, const psh::Nickname& nick)
+static void MakeGame_ResPlayerDetail(SendBuffer& buffer, const psh::ObjectID objectId, const psh::Nickname nick)
 {
 	buffer << ePacketType::eGame_ResPlayerDetail << objectId << nick;
 }
@@ -294,6 +299,56 @@ static void MakeGame_ResChat(SendBuffer& buffer, const psh::ObjectID id, const S
 static void GetGame_ResChat(CRecvBuffer& buffer, psh::ObjectID& id, String& chat)
 {
 	buffer >> id >> chat;
+}
+
+static void MakeVersion_ReqVersion(SendBuffer& buffer, const int version)
+{
+	buffer << ePacketType::eVersion_ReqVersion << version;
+}
+
+static void GetVersion_ReqVersion(CRecvBuffer& buffer, int& version)
+{
+	buffer >> version;
+}
+
+static void MakeVersion_ResVersion(SendBuffer& buffer, const int version)
+{
+	buffer << ePacketType::eVersion_ResVersion << version;
+}
+
+static void GetVersion_ResVersion(CRecvBuffer& buffer, int& version)
+{
+	buffer >> version;
+}
+
+static void MakeVersion_ReqGameData(SendBuffer& buffer, const int version)
+{
+	buffer << ePacketType::eVersion_ReqGameData << version;
+}
+
+static void GetVersion_ReqGameData(CRecvBuffer& buffer, int& version)
+{
+	buffer >> version;
+}
+
+static void MakeVersion_ResGameData(SendBuffer& buffer, const int version, const String csv)
+{
+	buffer << ePacketType::eVersion_ResGameData << version << csv;
+}
+
+static void GetVersion_ResGameData(CRecvBuffer& buffer, int& version, String& csv)
+{
+	buffer >> version >> csv;
+}
+
+static void MakeDebug_Delay(SendBuffer& buffer, const int delayMs)
+{
+	buffer << ePacketType::eDebug_Delay << delayMs;
+}
+
+static void GetDebug_Delay(CRecvBuffer& buffer, int& delayMs)
+{
+	buffer >> delayMs;
 }
 
 

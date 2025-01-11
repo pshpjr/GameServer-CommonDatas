@@ -176,6 +176,7 @@ Version_ResVersion :
 
 Version_ReqGameData :
 {
+    int : version
 }
 
 Version_ResGameData :
@@ -184,3 +185,7 @@ Version_ResGameData :
     String : csv
 }
 
+Debug_Delay :
+{
+    int : delayMs
+}
