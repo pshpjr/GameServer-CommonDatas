@@ -2,7 +2,7 @@
 #include <PacketGenerated.h>
 #include "UnrealTypes.h"
 #include "TLSPool.h"
-class CRecvBuffer;
+class RecvBuffer;
 namespace psh
 {
 	class MYLIB_API ContentJob

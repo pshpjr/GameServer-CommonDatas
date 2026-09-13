@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 #include <algorithm>
 #include <iostream>
-#include "CRecvBuffer.h"
+#include "RecvBuffer.h"
 #include "SendBuffer.h"
 
 #include <cmath>
@@ -178,7 +178,7 @@ namespace psh
         return buffer;
     }
 
-    inline CRecvBuffer& operator >>(CRecvBuffer& buffer, FVector& data)
+    inline RecvBuffer& operator >>(RecvBuffer& buffer, FVector& data)
     {
         buffer >> data.X >> data.Y;
         return buffer;

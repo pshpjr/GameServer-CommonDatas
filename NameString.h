@@ -1,7 +1,7 @@
 #pragma once
 #include <cstring>
 #include <algorithm>
-#include "CRecvBuffer.h"
+#include "RecvBuffer.h"
 #include "SendBuffer.h"
 
 namespace psh
@@ -47,7 +47,7 @@ namespace psh
         friend SendBuffer& operator<<(SendBuffer& buffer, const staticWString<L>& name);
 
         template <size_t L>
-        friend CRecvBuffer& operator>>(CRecvBuffer& buffer, staticWString<L>& name);
+        friend RecvBuffer& operator>>(RecvBuffer& buffer, staticWString<L>& name);
     };
 
     template <size_t LENGTH>
@@ -83,7 +83,7 @@ namespace psh
     }
 
     template <size_t LENGTH>
-    CRecvBuffer& operator>>(CRecvBuffer& buffer, staticWString<LENGTH>& name)
+    RecvBuffer& operator>>(RecvBuffer& buffer, staticWString<LENGTH>& name)
     {
         buffer.GetWstr(name._name.data(), LENGTH);
         return buffer;
@@ -128,7 +128,7 @@ namespace psh
         friend SendBuffer& operator<<(SendBuffer& buffer, const staticString<L>& name);
 
         template <size_t L>
-        friend CRecvBuffer& operator>>(CRecvBuffer& buffer, staticString<L>& name);
+        friend RecvBuffer& operator>>(RecvBuffer& buffer, staticString<L>& name);
     };
 
     template <size_t LENGTH>
@@ -154,7 +154,7 @@ namespace psh
     }
 
     template <size_t L>
-    CRecvBuffer& operator>>(CRecvBuffer& buffer, staticString<L>& name)
+    RecvBuffer& operator>>(RecvBuffer& buffer, staticString<L>& name)
     {
         buffer.GetCstr(name._name.data(), L);
         return buffer;

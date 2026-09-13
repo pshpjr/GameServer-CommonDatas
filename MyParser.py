@@ -23,7 +23,7 @@ def generate_make(function_name, kv_pairs, output_file):
     output_file.write(code)
 
 def generate_get(function_name, kv_pairs, output_file):
-    code = f"static void Get{function_name}(CRecvBuffer& buffer"
+    code = f"static void Get{function_name}(RecvBuffer& buffer"
     for key, value in kv_pairs:
         code += f", {key}& {value}"
     code += ")\n{\n"
@@ -47,7 +47,7 @@ def generate_head(output_file):
         output_file.write("#include \"ContentTypes.h\"\n")
         output_file.write("#include \"FVector.h\"\n")
         output_file.write("#include \"SendBuffer.h\"\n")
-        output_file.write("#include \"CRecvBuffer.h\"\n")
+        output_file.write("#include \"RecvBuffer.h\"\n")
         output_file.write("namespace psh \n{\n")
 
 def generate_struct(function_name, kv_pairs,output_file):
@@ -81,7 +81,7 @@ def generate_contentJob(function_data, outFile):
 #include <PacketGenerated.h>
 #include "UnrealTypes.h"
 #include "TLSPool.h"
-class CRecvBuffer;
+class RecvBuffer;
 namespace psh
 {{
 	class MYLIB_API ContentJob
@@ -150,7 +150,7 @@ UE_LOG(LogTemp,Display,TEXT("UnreaClientCreated %p "),this); }}
 
 	}}
 private:
-	virtual void OnRecvPacket(SessionID sessionId, CRecvBuffer& buffer) override;
+	virtual void OnRecvPacket(SessionID sessionId, RecvBuffer& buffer) override;
 
 public:
 	virtual void OnDisconnect(SessionID sessionId, int wsaErr) override;
@@ -183,7 +183,7 @@ def genetate_recvCase(function_name, kv_pairs):
 
 def generate_OnRecv(function_data):
     function_data = {k:v for k,v in function_data.items() if 'Res' in k }
-    code = f'''void UnrealClient::OnRecvPacket(SessionID sessionId, CRecvBuffer& buffer)
+    code = f'''void UnrealClient::OnRecvPacket(SessionID sessionId, RecvBuffer& buffer)
 {{
     psh::ePacketType type;
 	while(buffer.CanPopSize() != 0)
