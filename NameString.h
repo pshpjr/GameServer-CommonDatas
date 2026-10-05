@@ -60,16 +60,13 @@ namespace psh
     {
         ASSERT_CRASH(nameString.size() <= LENGTH, "Invalid Name Length");
         size_t copyLen = std::min<size_t>( nameString.length(), static_cast<size_t>(LENGTH));
-        wcsncpy_s(_name.data(), LENGTH, nameString.c_str(), copyLen);
+        std::copy_n(nameString.data(), copyLen, _name.data());
     }
 
     template<size_t LENGTH>
     inline staticWString<LENGTH>::staticWString(const char* nameString)
+        : staticWString(util::SToW(nameString).substr(0, LENGTH))
     {
-        size_t copyLen = std::min<size_t>( strlen(nameString), static_cast<size_t>(LENGTH));
-
-        mbstowcs_s(nullptr, _name.data(), LENGTH, nameString, copyLen);
-
     }
 }
 
@@ -140,7 +137,7 @@ namespace psh
     staticString<LENGTH>::staticString(const std::string& nameString)
     {
         size_t copyLen = std::min<size_t>(nameString.length(), static_cast<size_t>(LENGTH));
-        strncpy_s(_name.data(), LENGTH, nameString.c_str(), copyLen);
+        std::copy_n(nameString.data(), copyLen, _name.data());
     }
 }
 
