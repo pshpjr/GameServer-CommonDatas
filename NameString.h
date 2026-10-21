@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "RecvBuffer.h"
 #include "SendBuffer.h"
+#include "Utf16.h"
 
 namespace psh
 {
@@ -58,15 +59,25 @@ namespace psh
     template <size_t LENGTH>
     staticWString<LENGTH>::staticWString(const std::wstring& nameString)
     {
-        ASSERT_CRASH(nameString.size() <= LENGTH, "Invalid Name Length");
+        if (util::WideToUtf16(nameString).size() > LENGTH)
+            throw std::invalid_argument("Invalid UTF-16 name length");
         size_t copyLen = std::min<size_t>( nameString.length(), static_cast<size_t>(LENGTH));
         std::copy_n(nameString.data(), copyLen, _name.data());
     }
 
     template<size_t LENGTH>
     inline staticWString<LENGTH>::staticWString(const char* nameString)
-        : staticWString(util::SToW(nameString).substr(0, LENGTH))
     {
+        auto encoded = util::WideToUtf16(util::SToW(nameString));
+        if (encoded.size() > LENGTH)
+        {
+            encoded.resize(LENGTH);
+            // 고정 길이 경계에서 surrogate pair를 반으로 자르지 않는다.
+            if (!encoded.empty() && encoded.back() >= 0xD800 && encoded.back() <= 0xDBFF)
+                encoded.pop_back();
+        }
+        const auto decoded = util::Utf16ToWide(encoded);
+        std::copy(decoded.begin(), decoded.end(), _name.data());
     }
 }
 
@@ -75,7 +86,9 @@ namespace psh
     template <size_t LENGTH>
     SendBuffer& operator<<(SendBuffer& buffer, const staticWString<LENGTH>& name)
     {
-        buffer.SetWstr(name._name.data(), LENGTH);
+        auto encoded = util::WideToUtf16(name._name.data());
+        encoded.resize(LENGTH, u'\0');
+        buffer.SetUtf16(encoded);
         return buffer;
     }
 
